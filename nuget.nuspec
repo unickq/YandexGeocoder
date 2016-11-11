@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>YandexGeocoder</id>
+    <version>$version$</version>
+    <authors>Nick Chursin (@unickq)</authors>
+    <owners>unickq</owners>
+    <licenseUrl>https://github.com/unickq/YandexGeocoder/blob/master/LICENCE</licenseUrl>
+    <projectUrl>https://github.com/unickq/YandexGeocoder</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Lightweight .NET wrapper of Yandex Geocoder API - service for converting geographical coordinates to an address and back.</description>
+    <copyright>Copyright 2016 unickq</copyright>
+    <tags>yandex geocoder location finder</tags>
+  </metadata>
+   <files>
+    <file src="YandexGeocoder\bin\Release\YandexGeocoder.dll" target="lib\" />
+  </files>
+</package>
