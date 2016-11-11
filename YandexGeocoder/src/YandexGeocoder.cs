@@ -4,10 +4,11 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using YandexGeocoder.Raw;
 
 namespace YandexGeocoder
 {
-    public class YaGeocoder
+    public class YandexGeocoder
     {
         /// <summary>
         ///     The address you want to geocode, or the geographical coordinates. Coordinates can be set in reverse geocoding:
@@ -53,10 +54,10 @@ namespace YandexGeocoder
         }
 
         /// <summary>
-        ///     Gets the JSON responce from Yandex YaGeocoder.
+        ///     Gets the raw JSON responce from Yandex YandexGeocoder.
         /// </summary>
-        /// <returns></returns>
-        private string GetJsonResponce()
+        /// <returns>JSON string</returns>
+        public string GetJsonResponce()
         {
             var url = BuildUrl();
             var request = WebRequest.Create(url);
@@ -76,10 +77,10 @@ namespace YandexGeocoder
         }
 
         /// <summary>
-        ///     Gets the responses list.
+        ///     Gets the Raw data. RootObject
         /// </summary>
-        /// <returns>List with YandexResponse objects</returns>
-        public List<YandexResponse> GetResults()
+        /// <returns>Deserialized RootObject</returns>
+        public RootObject GetRawData()
         {
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
@@ -87,9 +88,17 @@ namespace YandexGeocoder
             writer.Flush();
             stream.Position = 0;
             var serializer = new DataContractJsonSerializer(typeof(RootObject));
-            var rootNode = (RootObject) serializer.ReadObject(stream);
+            return (RootObject)serializer.ReadObject(stream);
+        }
+
+        /// <summary>
+        ///     Gets the responses list.
+        /// </summary>
+        /// <returns>List with YandexResponse objects</returns>
+        public List<YandexResponse> GetResults()
+        {
             var ynadexResponsesList = new List<YandexResponse>();
-            foreach (var geoObject in rootNode.response.GeoObjectCollection.featureMember)
+            foreach (var geoObject in GetRawData().response.GeoObjectCollection.featureMember)
             {
                 var response = new YandexResponse(geoObject.GeoObject);
                 ynadexResponsesList.Add(response);

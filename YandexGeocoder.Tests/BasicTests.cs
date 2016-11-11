@@ -12,7 +12,7 @@ namespace YandexGeocoder.Tests
         [TestCaseSource(typeof(TestData), nameof(TestData.TestLocale))]
         public void AssertThatLocaleWorks(string query, LanguageCode locale, string result)
         {
-            var geocoder = new YaGeocoder
+            var geocoder = new YandexGeocoder
             {
                 SearchQuery = query,
                 Results = 1,
@@ -28,7 +28,7 @@ namespace YandexGeocoder.Tests
         [TestCaseSource(typeof(TestData), nameof(TestData.TestLocationPoints))]
         public void AssertThatLocationByPointsWorks(double latitude, double longitude, string result)
         {
-            var geocoder = new YaGeocoder
+            var geocoder = new YandexGeocoder
             {
                 SearchQuery = new LocationPoint(latitude, longitude).ToString(),
                 Results = 1,
@@ -43,7 +43,7 @@ namespace YandexGeocoder.Tests
         [TestCaseSource(typeof(TestData), nameof(TestData.TestResults))]
         public void AssertThatResultsAreCorrect1(int choosenResults, int expectedResults)
         {
-            var geocoder = new YaGeocoder
+            var geocoder = new YandexGeocoder
             {
                 SearchQuery = "тверская 1",
                 Results = choosenResults,

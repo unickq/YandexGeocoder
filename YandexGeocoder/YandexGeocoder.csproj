@@ -36,8 +36,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\YaGeocoder.cs" />
-    <Compile Include="src\JsonResponceClasses.cs" />
+    <Compile Include="src\YandexGeocoder.cs" />
+    <Compile Include="src\Raw\JsonResponceClasses.cs" />
     <Compile Include="src\LanguageCode.cs" />
     <Compile Include="src\LocationPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

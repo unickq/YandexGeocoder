@@ -1,4 +1,6 @@
-﻿namespace YandexGeocoder
+﻿using YandexGeocoder.Raw;
+
+namespace YandexGeocoder
 {
     public class YandexResponse
     {
