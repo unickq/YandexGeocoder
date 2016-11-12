@@ -7,10 +7,13 @@
     <owners>unickq</owners>
     <licenseUrl>https://github.com/unickq/YandexGeocoder/blob/master/LICENCE</licenseUrl>
     <projectUrl>https://github.com/unickq/YandexGeocoder</projectUrl>
+    <iconUrl>https://yandex.ru/maps/apple-touch-icon-180x180.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Lightweight .NET wrapper of Yandex Geocoder API - service for converting geographical coordinates to an address and back.</description>
     <copyright>Copyright 2016 unickq</copyright>
-    <tags>yandex geocoder location finder</tags>
+    <title>YandexGeocoder</title>
+    <summary>Yandex Geocoder API wrapper. Converting geographical coordinates to an address and back.</summary>
+    <tags>yandex geocoder maps geocode nearby places coordinate geolocation location</tags>
   </metadata>
    <files>
     <file src="YandexGeocoder\bin\Release\YandexGeocoder.dll" target="lib\" />
