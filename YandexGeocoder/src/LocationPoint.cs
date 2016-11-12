@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YandexGeocoder
+namespace Yandex.Geocoder
 {
     public class LocationPoint
     {

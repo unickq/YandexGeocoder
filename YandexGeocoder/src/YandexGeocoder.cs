@@ -4,9 +4,9 @@ using System.IO;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using YandexGeocoder.Raw;
+using Yandex.Geocoder.Raw;
 
-namespace YandexGeocoder
+namespace Yandex.Geocoder
 {
     public class YandexGeocoder
     {

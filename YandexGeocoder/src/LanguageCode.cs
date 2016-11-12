@@ -1,6 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
 
-namespace YandexGeocoder
+namespace Yandex.Geocoder
 {
     /// <summary>
     ///     Locale for lang parameter

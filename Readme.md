@@ -4,7 +4,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/42jdei8626b4ie1h?svg=true)](https://ci.appveyor.com/project/unickq/yandexgeocoder)
 [![Test status](http://flauschig.ch/batch.php?type=tests&account=unickq&slug=yandexgeocoder&branch=master)](https://ci.appveyor.com/project/unickq/yandexgeocoder/branch/master)
 ### Download (NuGet):
-[![NuGet FlaUI.Core](http://flauschig.ch/nubadge.php?id=YandexGeocoder)](https://www.nuget.org/packages/YandexGeocoder)
+[![NuGet YandexGeocoder](http://flauschig.ch/nubadge.php?id=YandexGeocoder)](https://www.nuget.org/packages/YandexGeocoder)
 ### About:
 [Yandex Geocoder](https://tech.yandex.com/maps/geocoder/) service can get the coordinates and other information about an object using its name or address, as well as the opposite, using the coordinates of an object to get its address (reverse geocoding).
 

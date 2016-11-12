@@ -1,6 +1,6 @@
-﻿using YandexGeocoder.Raw;
+﻿using Yandex.Geocoder.Raw;
 
-namespace YandexGeocoder
+namespace Yandex.Geocoder
 {
     public class YandexResponse
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 using NUnit.Framework;
 
-namespace YandexGeocoder.Tests
+namespace Yandex.Geocoder.Tests
 {
     [TestFixture]
     public class BasicTests

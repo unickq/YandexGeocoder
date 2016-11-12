@@ -6,7 +6,7 @@
     <ProjectGuid>{2B93D86B-3EFD-4215-A389-28C14C860760}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>YandexGeocoder.Tests</RootNamespace>
+    <RootNamespace>Yandex.Geocoder.Tests</RootNamespace>
     <AssemblyName>YandexGeocoder.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
