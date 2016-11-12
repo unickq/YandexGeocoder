@@ -1,4 +1,4 @@
-﻿# Yandex Geocoder .NET wrapper
+# Yandex Geocoder .NET wrapper
 .NET API for converting geographical coordinates to an address and back.
 ### Build:
 [![Build status](https://ci.appveyor.com/api/projects/status/42jdei8626b4ie1h?svg=true)](https://ci.appveyor.com/project/unickq/yandexgeocoder)
@@ -13,10 +13,15 @@ For example, the geocoder receives the request “Türkiye, İstanbul, Kartal, E
 Note: Free version supports 25000 requests per day. Also not  all countries supported - read [geocoder documentation](https://tech.yandex.com/maps/doc/geocoder/desc/concepts/About-docpage/).
 
 ### Example:
-```
-var yaGeocoder = new YaGeocoder { SearchQuery = "Kyiv, Ukraine, Maydan Nezalezhnosti", Results = 1, LanguageCode = LanguageCode.en_US };
-Console.WriteLine(yaGeocoder.GetResults().First());
-```
+```csharp
+var geocoder = new YandexGeocoder {
+    SearchQuery = "Kyiv, 
+    Results = 1,
+    LanguageCode = LanguageCode.en_US
+};
+Console.WriteLine(geocoder.GetResults().First());
+```    Ukraine, Maydan Nezalezhnosti ", 
+
 ##### Output:
 
     AddressLine: Kyiv, Nezalezhnosti Square
