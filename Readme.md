@@ -15,12 +15,12 @@ Note: Free version supports 25000 requests per day. Also not  all countries supp
 ### Example:
 ```csharp
 var geocoder = new YandexGeocoder {
-    SearchQuery = "Kyiv, 
+    SearchQuery = "Kyiv, Ukraine, Maydan Nezalezhnosti",
     Results = 1,
     LanguageCode = LanguageCode.en_US
 };
 Console.WriteLine(geocoder.GetResults().First());
-```    Ukraine, Maydan Nezalezhnosti ", 
+```    
 
 ##### Output:
 
