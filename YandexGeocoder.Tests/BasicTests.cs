@@ -85,6 +85,8 @@ namespace Yandex.Geocoder.Tests
                 yield return new TestCaseData("Киев", LanguageCode.en_US, "Kyiv");
                 yield return new TestCaseData("Киев", LanguageCode.be_BY, "Киев");
                 yield return new TestCaseData("Київ", LanguageCode.ru_RU, "Киев");
+                yield return new TestCaseData("Владимирская область, городской округ Владимир", 
+                    LanguageCode.ru_RU, "городской округ Город Владимир");
             }
         }
 
