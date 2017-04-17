@@ -22,8 +22,8 @@ namespace Yandex.Geocoder
         public LocationPoint(string str)
         {
             var elArray = str.Split(' ');
-            Latitude = Convert.ToDouble(elArray[1]);
-            Longitude = Convert.ToDouble(elArray[0]);
+            Latitude = Convert.ToDouble(elArray[1], System.Globalization.CultureInfo.InvariantCulture);
+            Longitude = Convert.ToDouble(elArray[0], System.Globalization.CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Yandex.Geocoder
         /// </summary>
         public override string ToString()
         {
-            return $"{Longitude},{Latitude}";
+            return String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0},{1}", Longitude, Latitude);
         }
     }
 }

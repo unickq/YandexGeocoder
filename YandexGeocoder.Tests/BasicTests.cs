@@ -54,6 +54,23 @@ namespace Yandex.Geocoder.Tests
             Console.WriteLine("Results count:" + results.Count);
             Assert.AreEqual(expectedResults, results.Count);
         }
+        [Test]
+        public void AssertConvertEnCulture()
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("ru-RU");
+            //with this culture, convert from "1.01" will throw exception
+            //Convert.ToDouble("1.01");
+
+            var geocoder = new YandexGeocoder
+            {
+                SearchQuery = "тверская 1",
+                Results = 1,
+                LanguageCode = LanguageCode.ru_RU
+            };
+
+            var results = geocoder.GetResults();
+            Console.WriteLine("Results count:" + results.Count);
+        }
     }
 
     public class TestData
