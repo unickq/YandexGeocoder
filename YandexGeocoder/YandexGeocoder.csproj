@@ -12,7 +12,7 @@
     <RootNamespace>YandexGeocoder</RootNamespace>
     <PackageProjectUrl>https://github.com/unickq/YandexGeocoder</PackageProjectUrl>
     <RepositoryUrl>https://github.com/unickq/YandexGeocoder</RepositoryUrl>
-    <PackageReleaseNotes>subAdministrativeArea.Locality fix</PackageReleaseNotes>
+    <PackageReleaseNotes>Added async methods</PackageReleaseNotes>
     <PackageTags>yandex geocoder maps geocode nearby places coordinate geolocation location</PackageTags>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>

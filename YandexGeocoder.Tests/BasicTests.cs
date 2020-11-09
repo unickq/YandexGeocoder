@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Yandex.Geocoder.Tests
@@ -13,7 +14,7 @@ namespace Yandex.Geocoder.Tests
 
         [Test]
         [TestCaseSource(typeof(TestData), nameof(TestData.TestLocale))]
-        public void AssertThatLocaleWorks(string query, LanguageCode locale, string result)
+        public async Task ValidatesResultsAsync(string query, LanguageCode locale, string result)
         {
             var geocoder = new YandexGeocoder
             {
@@ -23,14 +24,15 @@ namespace Yandex.Geocoder.Tests
                 LanguageCode = locale
             };
 
-            var results = geocoder.GetResults();
-            Console.WriteLine(results.First());
-            StringAssert.Contains(result, results.First().AddressLine);
+
+            var results = geocoder.GetResultsAsync();
+            Console.WriteLine((await results).First());
+            StringAssert.Contains(result, (await results).First().AddressLine);
         }
 
         [Test]
         [TestCaseSource(typeof(TestData), nameof(TestData.TestLocationPoints))]
-        public void AssertThatLocationByPointsWorks(double latitude, double longitude, string result)
+        public void ValidatesLocationPoints(double latitude, double longitude, string result)
         {
             var geocoder = new YandexGeocoder
             {
@@ -46,13 +48,13 @@ namespace Yandex.Geocoder.Tests
 
         [Test]
         [TestCaseSource(typeof(TestData), nameof(TestData.TestResults))]
-        public void AssertThatResultsAreCorrect1(int choosenResults, int expectedResults)
+        public void ValidatesResultsCount(int chosenResults, int expectedResults)
         {
             var geocoder = new YandexGeocoder
             {
                 Apikey = API_KEY,
                 SearchQuery = "тверская 1",
-                Results = choosenResults,
+                Results = chosenResults,
                 LanguageCode = LanguageCode.ru_RU
             };
 
@@ -60,16 +62,17 @@ namespace Yandex.Geocoder.Tests
             Console.WriteLine("Results count:" + results.Count);
             Assert.AreEqual(expectedResults, results.Count);
         }
+
         [Test]
-        public void AssertConvertEnCulture()
+        public void ValidatesCultureAndReadsApiFromEnv()
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("ru-RU");
-            //with this culture, convert from "1.01" will throw exception
-            //Convert.ToDouble("1.01");
+            System.Threading.Thread.CurrentThread.CurrentCulture =
+                System.Globalization.CultureInfo.GetCultureInfo("ru-RU");
+            
+            Environment.SetEnvironmentVariable("YANDEX_GEOCODER_KEY", API_KEY);
 
             var geocoder = new YandexGeocoder
             {
-                Apikey = "44432545-eded-4d89-8921-144cd8c8919b",
                 SearchQuery = "тверская 1",
                 Results = 1,
                 LanguageCode = LanguageCode.ru_RU
