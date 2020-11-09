@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Yandex.Geocoder.Raw
+namespace Yandex.Geocoder.Model
 {
     [DataContract]
     public class Envelope

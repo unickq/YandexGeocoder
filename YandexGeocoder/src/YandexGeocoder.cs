@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using Yandex.Geocoder.Raw;
+using Yandex.Geocoder.Model;
 
 namespace Yandex.Geocoder
 {

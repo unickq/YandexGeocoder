@@ -1,4 +1,4 @@
-﻿using Yandex.Geocoder.Raw;
+﻿using Yandex.Geocoder.Model;
 
 namespace Yandex.Geocoder
 {
