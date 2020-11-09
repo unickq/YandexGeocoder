@@ -47,7 +47,7 @@ namespace Yandex.Geocoder
         /// </summary>
         public override string ToString()
         {
-            return String.Format(System.Globalization.CultureInfo.InvariantCulture, "{0},{1}", Longitude, Latitude);
+            return string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0},{1}", Longitude, Latitude);
         }
     }
 }

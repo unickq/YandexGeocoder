@@ -1,57 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B2C250CC-3CF1-464D-B16D-4392761C69FF}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Yandex.Geocoder</RootNamespace>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Version>0.4.4</Version>
+
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Nick Chursin</Authors>
+    <Description>Lightweight .NET wrapper of Yandex Geocoder API - service for converting geographical coordinates to an address and back.</Description>
+    <PackageId>YandexGeocoder</PackageId>
     <AssemblyName>YandexGeocoder</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <RootNamespace>YandexGeocoder</RootNamespace>
+    <PackageProjectUrl>https://github.com/unickq/YandexGeocoder</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/unickq/YandexGeocoder</RepositoryUrl>
+    <PackageReleaseNotes>Added async methods</PackageReleaseNotes>
+    <PackageTags>yandex geocoder maps geocode nearby places coordinate geolocation location</PackageTags>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageIcon>logo.png</PackageIcon>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml" />
+    <None Include="..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="src\YandexGeocoder.cs" />
-    <Compile Include="src\Raw\JsonResponceClasses.cs" />
-    <Compile Include="src\LanguageCode.cs" />
-    <Compile Include="src\LocationPoint.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\YandexResponse.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

@@ -1,35 +1,42 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Yandex.Geocoder.Tests
 {
     [TestFixture]
+    [Parallelizable(ParallelScope.Children)]
     public class BasicTests
     {
+        private const string API_KEY = "Set your key here";
+
         [Test]
         [TestCaseSource(typeof(TestData), nameof(TestData.TestLocale))]
-        public void AssertThatLocaleWorks(string query, LanguageCode locale, string result)
+        public async Task ValidatesResultsAsync(string query, LanguageCode locale, string result)
         {
             var geocoder = new YandexGeocoder
             {
+                Apikey = API_KEY,
                 SearchQuery = query,
                 Results = 1,
                 LanguageCode = locale
             };
 
-            var results = geocoder.GetResults();
-            Console.WriteLine(results.First());
-            Assert.AreEqual(result, results.First().AddressLine);
+
+            var results = geocoder.GetResultsAsync();
+            Console.WriteLine((await results).First());
+            StringAssert.Contains(result, (await results).First().AddressLine);
         }
 
         [Test]
         [TestCaseSource(typeof(TestData), nameof(TestData.TestLocationPoints))]
-        public void AssertThatLocationByPointsWorks(double latitude, double longitude, string result)
+        public void ValidatesLocationPoints(double latitude, double longitude, string result)
         {
             var geocoder = new YandexGeocoder
             {
+                Apikey = API_KEY,
                 SearchQuery = new LocationPoint(latitude, longitude).ToString(),
                 Results = 1,
                 LanguageCode = LanguageCode.en_US
@@ -41,12 +48,13 @@ namespace Yandex.Geocoder.Tests
 
         [Test]
         [TestCaseSource(typeof(TestData), nameof(TestData.TestResults))]
-        public void AssertThatResultsAreCorrect1(int choosenResults, int expectedResults)
+        public void ValidatesResultsCount(int chosenResults, int expectedResults)
         {
             var geocoder = new YandexGeocoder
             {
+                Apikey = API_KEY,
                 SearchQuery = "тверская 1",
-                Results = choosenResults,
+                Results = chosenResults,
                 LanguageCode = LanguageCode.ru_RU
             };
 
@@ -54,12 +62,14 @@ namespace Yandex.Geocoder.Tests
             Console.WriteLine("Results count:" + results.Count);
             Assert.AreEqual(expectedResults, results.Count);
         }
+
         [Test]
-        public void AssertConvertEnCulture()
+        public void ValidatesCultureAndReadsApiFromEnv()
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo("ru-RU");
-            //with this culture, convert from "1.01" will throw exception
-            //Convert.ToDouble("1.01");
+            System.Threading.Thread.CurrentThread.CurrentCulture =
+                System.Globalization.CultureInfo.GetCultureInfo("ru-RU");
+            
+            Environment.SetEnvironmentVariable("YANDEX_GEOCODER_KEY", API_KEY);
 
             var geocoder = new YandexGeocoder
             {
@@ -83,10 +93,8 @@ namespace Yandex.Geocoder.Tests
                 yield return new TestCaseData("Киев", LanguageCode.uk_UA, "Київ");
                 yield return new TestCaseData("Kyiv", LanguageCode.uk_UA, "Київ");
                 yield return new TestCaseData("Киев", LanguageCode.en_US, "Kyiv");
-                yield return new TestCaseData("Киев", LanguageCode.be_BY, "Киев");
+                yield return new TestCaseData("Киев", LanguageCode.be_BY, "Кіеў");
                 yield return new TestCaseData("Київ", LanguageCode.ru_RU, "Киев");
-                yield return new TestCaseData("Владимирская область, городской округ Владимир", 
-                    LanguageCode.ru_RU, "городской округ Город Владимир");
             }
         }
 
@@ -94,7 +102,6 @@ namespace Yandex.Geocoder.Tests
         {
             get
             {
-                yield return new TestCaseData(0, 10);
                 yield return new TestCaseData(1, 1);
                 yield return new TestCaseData(10, 10);
                 yield return new TestCaseData(100, 100);

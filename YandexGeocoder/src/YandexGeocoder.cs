@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
-using Yandex.Geocoder.Raw;
+using System.Threading.Tasks;
+using Yandex.Geocoder.Model;
 
 namespace Yandex.Geocoder
 {
@@ -33,13 +35,12 @@ namespace Yandex.Geocoder
         /// <summary>
         ///     The key assigned in the Yandex Developer's Dashboard.
         /// </summary>
-        public string Apikey { get; set; } = null;
+        public string Apikey { get; set; } = Environment.GetEnvironmentVariable("YANDEX_GEOCODER_KEY");
 
 
         /// <summary>
         ///     Builds the URL with all parameters
         /// </summary>
-        /// <returns>URL for webRequest</returns>
         private string BuildUrl()
         {
             var sb = new StringBuilder();
@@ -53,57 +54,61 @@ namespace Yandex.Geocoder
             return sb.ToString();
         }
 
-        /// <summary>
-        ///     Gets the raw JSON responce from Yandex YandexGeocoder.
-        /// </summary>
-        /// <returns>JSON string</returns>
-        public string GetJsonResponce()
+        public async Task<string> GetResponseAsync()
         {
             var url = BuildUrl();
-            var request = WebRequest.Create(url);
-            request.Credentials = CredentialCache.DefaultCredentials;
-            using (var response = (HttpWebResponse) request.GetResponse())
+            var request = (HttpWebRequest) WebRequest.Create(url);
+            using (var response = await request.GetResponseAsync())
+            using (var responseStream = response.GetResponseStream())
+            using (var reader =
+                new StreamReader(responseStream ?? throw new InvalidOperationException("Response is null")))
             {
-                using (var dataStream = response.GetResponseStream())
-                {
-                    if (dataStream != null)
-                        using (var reader = new StreamReader(dataStream))
-                        {
-                            return reader.ReadToEnd();
-                        }
-                    throw new Exception("Response stream is null");
-                }
+                return reader.ReadToEnd();
             }
+        }
+
+        public string GetResponse()
+        {
+            return GetResponseAsync().Result;
+        }
+
+        /// <summary>
+        ///     Gets the Raw data. RootObject asynchronously
+        /// </summary>
+        public async Task<RootObject> GetRawDataAsync()
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(await GetResponseAsync());
+            writer.Flush();
+            stream.Position = 0;
+            var serializer = new DataContractJsonSerializer(typeof(RootObject));
+            return (RootObject) serializer.ReadObject(stream);
         }
 
         /// <summary>
         ///     Gets the Raw data. RootObject
         /// </summary>
-        /// <returns>Deserialized RootObject</returns>
         public RootObject GetRawData()
         {
-            var stream = new MemoryStream();
-            var writer = new StreamWriter(stream);
-            writer.Write(GetJsonResponce());
-            writer.Flush();
-            stream.Position = 0;
-            var serializer = new DataContractJsonSerializer(typeof(RootObject));
-            return (RootObject)serializer.ReadObject(stream);
+            return GetRawDataAsync().Result;
         }
 
         /// <summary>
         ///     Gets the responses list.
         /// </summary>
-        /// <returns>List with YandexResponse objects</returns>
         public List<YandexResponse> GetResults()
         {
-            var ynadexResponsesList = new List<YandexResponse>();
-            foreach (var geoObject in GetRawData().response.GeoObjectCollection.featureMember)
-            {
-                var response = new YandexResponse(geoObject.GeoObject);
-                ynadexResponsesList.Add(response);
-            }
-            return ynadexResponsesList;
+            return GetResultsAsync().Result;
+        }
+
+        /// <summary>
+        ///     Gets the responses list asynchronously.
+        /// </summary>
+        public async Task<List<YandexResponse>> GetResultsAsync()
+        {
+            return (await GetRawDataAsync()).response.GeoObjectCollection.featureMember
+                .Select(geoObject => new YandexResponse(geoObject.GeoObject)).ToList();
         }
     }
 }
