@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -54,10 +55,10 @@ namespace Yandex.Geocoder
         }
 
         /// <summary>
-        ///     Gets the raw JSON responce from Yandex YandexGeocoder.
+        ///     Gets the raw JSON response from Yandex YandexGeocoder.
         /// </summary>
         /// <returns>JSON string</returns>
-        public string GetJsonResponce()
+        public string GetJsonResponse()
         {
             var url = BuildUrl();
             var request = WebRequest.Create(url);
@@ -66,12 +67,11 @@ namespace Yandex.Geocoder
             {
                 using (var dataStream = response.GetResponseStream())
                 {
-                    if (dataStream != null)
-                        using (var reader = new StreamReader(dataStream))
-                        {
-                            return reader.ReadToEnd();
-                        }
-                    throw new Exception("Response stream is null");
+                    if (dataStream == null) throw new Exception("Response stream is null");
+                    using (var reader = new StreamReader(dataStream))
+                    {
+                        return reader.ReadToEnd();
+                    }
                 }
             }
         }
@@ -84,11 +84,11 @@ namespace Yandex.Geocoder
         {
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
-            writer.Write(GetJsonResponce());
+            writer.Write(GetJsonResponse());
             writer.Flush();
             stream.Position = 0;
             var serializer = new DataContractJsonSerializer(typeof(RootObject));
-            return (RootObject)serializer.ReadObject(stream);
+            return (RootObject) serializer.ReadObject(stream);
         }
 
         /// <summary>
@@ -97,13 +97,8 @@ namespace Yandex.Geocoder
         /// <returns>List with YandexResponse objects</returns>
         public List<YandexResponse> GetResults()
         {
-            var ynadexResponsesList = new List<YandexResponse>();
-            foreach (var geoObject in GetRawData().response.GeoObjectCollection.featureMember)
-            {
-                var response = new YandexResponse(geoObject.GeoObject);
-                ynadexResponsesList.Add(response);
-            }
-            return ynadexResponsesList;
+            return GetRawData().response.GeoObjectCollection.featureMember
+                .Select(geoObject => new YandexResponse(geoObject.GeoObject)).ToList();
         }
     }
 }
