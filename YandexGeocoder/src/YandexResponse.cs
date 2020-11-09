@@ -44,7 +44,7 @@ namespace Yandex.Geocoder
                 if (subAdministrativeArea == null) return;
 
                 SubAdministrativeArea = subAdministrativeArea.SubAdministrativeAreaName;
-                LocalityName = subAdministrativeArea.Locality.LocalityName;
+                LocalityName = subAdministrativeArea.Locality?.LocalityName;
             }
         }
 
