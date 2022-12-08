@@ -81,6 +81,21 @@ namespace Yandex.Geocoder.Tests
             var results = geocoder.GetResults();
             Console.WriteLine("Results count:" + results.Count);
         }
+        
+        [Test]
+        [TestCase("Зейский государственный природный заповедник")]
+        public async Task QueryDoesntThrow(string query)
+        {
+          var geocoder = new YandexGeocoder
+          {
+            Apikey = API_KEY,
+            SearchQuery = query,
+          };
+
+
+          var results = geocoder.GetResultsAsync();
+          Console.WriteLine((await results).First());
+        } 
     }
 
     public class TestData

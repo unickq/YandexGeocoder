@@ -28,9 +28,10 @@ namespace Yandex.Geocoder
                 Kind = geocoderMetaData.kind;
 
                 var addressDetails = geocoderMetaData.AddressDetails;
-                if (addressDetails == null) return;
-
-                var country = addressDetails.Country;
+                
+                var country = addressDetails?.Country;
+                if (country == null) return;
+                
                 AddressLine = country.AddressLine;
                 CountryName = country.CountryName;
                 CountryCode = country.CountryNameCode;
